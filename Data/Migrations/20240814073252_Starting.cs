@@ -5,7 +5,7 @@
 namespace TruckLoadingApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedUserFields : Migration
+    public partial class Starting : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
