@@ -3,16 +3,13 @@
 @{
     ViewData["Title"] = "Routes";
 }
-
 <h1>Routes</h1>
-
 @if (User.IsInRole("Driver"))
 {
     <p>
         <a asp-page="Create">Create New</a>
     </p>
 }
-
 <form method="get">
     <div class="form-row align-items-center">
         <div class="col-auto">
@@ -26,14 +23,13 @@
         </div>
     </div>
 </form>
-
 <table class="table">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.Origin)</th>
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.Destination)</th>
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.AvailableDate)</th>
-            <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.Driver)</th>
+            <th>Driver</th>
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.Description)</th>
             <th></th>
         </tr>
@@ -45,7 +41,7 @@
                 <td>@Html.DisplayFor(modelItem => item.Route.Origin)</td>
                 <td>@Html.DisplayFor(modelItem => item.Route.Destination)</td>
                 <td>@Html.DisplayFor(modelItem => item.Route.AvailableDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.Route.Driver.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.DriverFirstName)</td>
                 <td>@Html.DisplayFor(modelItem => item.Route.Description)</td>
                 <td>
                     @if (User.IsInRole("Client"))

@@ -24,7 +24,7 @@ namespace TruckLoadingApp.Pages.Troutes
             _userManager = userManager;
         }
 
-        public IList<Booking> BookedTrucks { get; set; }
+        public IList<BookedTruckViewModel> BookedTrucks { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -34,14 +34,26 @@ namespace TruckLoadingApp.Pages.Troutes
                 return NotFound();
             }
 
-            BookedTrucks = await _context.Bookings
+            var bookedTrucks = await _context.Bookings
                 .Include(b => b.Route)
                 .ThenInclude(r => r.Driver)
                 .Where(b => b.ClientId == user.Id)
                 .OrderByDescending(b => b.BookingDate)
                 .ToListAsync();
 
+            BookedTrucks = bookedTrucks.Select(b => new BookedTruckViewModel
+            {
+                Booking = b,
+                DriverFirstName = b.Route.Driver.FirstName
+            }).ToList();
+
             return Page();
         }
+    }
+
+    public class BookedTruckViewModel
+    {
+        public Booking Booking { get; set; }
+        public string DriverFirstName { get; set; }
     }
 }

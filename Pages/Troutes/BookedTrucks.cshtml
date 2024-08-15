@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = "Booked Trucks";
 }
-
 <h1>Booked Trucks</h1>
-
 <table class="table">
     <thead>
         <tr>
@@ -18,18 +16,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var booking in Model.BookedTrucks)
+        @foreach (var bookedTruck in Model.BookedTrucks)
         {
             <tr>
-                <td>@booking.Route.Origin</td>
-                <td>@booking.Route.Destination</td>
-                <td>@booking.Route.AvailableDate.ToShortDateString()</td>
-                <td>@booking.Route.Driver.UserName</td>
-                <td>@booking.Route.Description</td>
-                <td>@booking.BookingDate.ToShortDateString()</td>
+                <td>@bookedTruck.Booking.Route.Origin</td>
+                <td>@bookedTruck.Booking.Route.Destination</td>
+                <td>@bookedTruck.Booking.Route.AvailableDate.ToShortDateString()</td>
+                <td>@bookedTruck.DriverFirstName</td>
+                <td>@bookedTruck.Booking.Route.Description</td>
+                <td>@bookedTruck.Booking.BookingDate.ToShortDateString()</td>
             </tr>
         }
     </tbody>
 </table>
-
 <a asp-page="./Index" class="btn btn-secondary">Back to Available Trucks</a>

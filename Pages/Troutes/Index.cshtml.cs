@@ -51,6 +51,7 @@ namespace TruckLoadingApp.Pages.Troutes
             TRoutes = routes.Select(r => new TRouteViewModel
             {
                 Route = r,
+                DriverFirstName = r.Driver.FirstName,
                 IsBooked = _context.Bookings.Any(b => b.RouteId == r.RouteId)
             }).ToList();
         }
@@ -59,6 +60,7 @@ namespace TruckLoadingApp.Pages.Troutes
     public class TRouteViewModel
     {
         public TRoute Route { get; set; }
+        public string DriverFirstName { get; set; }
         public bool IsBooked { get; set; }
     }
 }
