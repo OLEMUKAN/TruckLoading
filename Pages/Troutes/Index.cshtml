@@ -29,7 +29,10 @@
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.Origin)</th>
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.Destination)</th>
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.AvailableDate)</th>
-            <th>Driver</th>
+            @if (User.IsInRole("Client"))
+            {
+                <th>Driver</th>
+            }
             <th>@Html.DisplayNameFor(model => model.TRoutes[0].Route.Description)</th>
             <th></th>
         </tr>
@@ -41,7 +44,10 @@
                 <td>@Html.DisplayFor(modelItem => item.Route.Origin)</td>
                 <td>@Html.DisplayFor(modelItem => item.Route.Destination)</td>
                 <td>@Html.DisplayFor(modelItem => item.Route.AvailableDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.DriverFirstName)</td>
+                @if (User.IsInRole("Client"))
+                {
+                    <td>@Html.DisplayFor(modelItem => item.DriverFirstName)</td>
+                }
                 <td>@Html.DisplayFor(modelItem => item.Route.Description)</td>
                 <td>
                     @if (User.IsInRole("Client"))

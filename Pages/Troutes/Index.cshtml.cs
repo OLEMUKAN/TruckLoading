@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +13,10 @@ namespace TruckLoadingApp.Pages.Troutes
     [Authorize(Roles = "Client,Driver")]
     public class IndexModel : PageModel
     {
-        private readonly TruckLoadingApp.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public IndexModel(TruckLoadingApp.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public IndexModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -34,7 +32,14 @@ namespace TruckLoadingApp.Pages.Troutes
 
         public async Task OnGetAsync()
         {
+            var user = await _userManager.GetUserAsync(User);
             var query = _context.TRoutes.Include(t => t.Driver).AsQueryable();
+
+            if (User.IsInRole("Driver"))
+            {
+                // Filter routes for the logged-in driver
+                query = query.Where(t => t.Driver.Id == user.Id);
+            }
 
             if (!string.IsNullOrEmpty(OriginFilter))
             {
