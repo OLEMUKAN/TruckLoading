@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TruckLoadingApp.Data;
 
@@ -11,9 +12,11 @@ using TruckLoadingApp.Data;
 namespace TruckLoadingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240815170913_AddTRoutesTableForReal")]
+    partial class AddTRoutesTableForReal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,35 +239,6 @@ namespace TruckLoadingApp.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("TruckLoadingApp.Models.Booking", b =>
-                {
-                    b.Property<Guid>("BookingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("BookingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("RouteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BookingId");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("RouteId");
-
-                    b.ToTable("Bookings");
-                });
-
             modelBuilder.Entity("TruckLoadingApp.Models.TRoute", b =>
                 {
                     b.Property<Guid>("RouteId")
@@ -389,25 +363,6 @@ namespace TruckLoadingApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TruckLoadingApp.Models.Booking", b =>
-                {
-                    b.HasOne("TruckLoadingApp.Models.ApplicationUser", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TruckLoadingApp.Models.TRoute", "Route")
-                        .WithMany()
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Route");
                 });
 
             modelBuilder.Entity("TruckLoadingApp.Models.TRoute", b =>

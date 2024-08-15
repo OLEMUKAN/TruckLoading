@@ -13,5 +13,7 @@ namespace TruckLoadingApp.Data
         }
         public DbSet<ApplicationUser> applicationUsers { get; set; }
         public DbSet<Truck> Trucks { get; set; }
+        public DbSet<TRoute> TRoutes { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
     }
 }

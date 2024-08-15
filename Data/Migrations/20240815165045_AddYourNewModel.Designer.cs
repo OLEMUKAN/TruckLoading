@@ -12,8 +12,8 @@ using TruckLoadingApp.Data;
 namespace TruckLoadingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240814074140_AddedTruck")]
-    partial class AddedTruck
+    [Migration("20240815165045_AddYourNewModel")]
+    partial class AddYourNewModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -239,6 +239,41 @@ namespace TruckLoadingApp.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("TruckLoadingApp.Models.TRoute", b =>
+                {
+                    b.Property<Guid>("RouteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AvailableDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Destination")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DriverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Origin")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("RouteId");
+
+                    b.HasIndex("DriverId");
+
+                    b.ToTable("TRoutes");
+                });
+
             modelBuilder.Entity("TruckLoadingApp.Models.Truck", b =>
                 {
                     b.Property<Guid>("Id")
@@ -328,6 +363,17 @@ namespace TruckLoadingApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TruckLoadingApp.Models.TRoute", b =>
+                {
+                    b.HasOne("TruckLoadingApp.Models.ApplicationUser", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("TruckLoadingApp.Models.Truck", b =>
