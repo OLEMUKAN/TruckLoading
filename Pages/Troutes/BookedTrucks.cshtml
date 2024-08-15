@@ -1,0 +1,35 @@
+﻿@page
+@model TruckLoadingApp.Pages.Troutes.BookedTrucksModel
+@{
+    ViewData["Title"] = "Booked Trucks";
+}
+
+<h1>Booked Trucks</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Available Date</th>
+            <th>Driver</th>
+            <th>Description</th>
+            <th>Booking Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model.BookedTrucks)
+        {
+            <tr>
+                <td>@booking.Route.Origin</td>
+                <td>@booking.Route.Destination</td>
+                <td>@booking.Route.AvailableDate.ToShortDateString()</td>
+                <td>@booking.Route.Driver.UserName</td>
+                <td>@booking.Route.Description</td>
+                <td>@booking.BookingDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="./Index" class="btn btn-secondary">Back to Available Trucks</a>
